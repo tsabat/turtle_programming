@@ -1,11 +1,10 @@
-from email.mime import image
 from random import randrange
 import turtle
 import time
 import os
 from tkinter import PhotoImage
 
-player_life = 100
+player_life = 300
 counter = 0
 
 wn = turtle.getscreen()
@@ -13,12 +12,14 @@ wn.title("old ones army")
 wn.bgcolor("black")
 portal_shape = os.path.expanduser("~/Desktop/portal.gif")
 wn.addshape(portal_shape)
-player = turtle.Turtle()
+
+
+shape = PhotoImage(file="char.gif").subsample(3, 3)
+wn.addshape(name="char", shape=shape)
+
+player = turtle.Turtle("char")
 player.color("black")
 player.frame = 0
-charictor = os.path.expanduser("~/Downloads/a.gif")
-wn.addshape(charictor)
-player.shape(charictor)
 
 
 def portal_set_up(portal_shape):
@@ -54,6 +55,8 @@ def player_animate(counter):
 
 portal1 = portal_set_up(portal_shape)
 portal2 = portal_set_up(portal_shape)
+
+turtle.penup()
 
 portal1.goto(-400, 0)
 portal2.goto(400, 0)
