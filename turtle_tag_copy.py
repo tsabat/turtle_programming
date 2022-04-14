@@ -1,4 +1,5 @@
 from turtle import *
+from pynput import keyboard
 
 i = True
 
@@ -7,11 +8,6 @@ tt = getscreen()
 player = Turtle("turtle")
 player.pencolor("blue")
 player.pensize(5)
-
-turtle_tager = Turtle("turtle")
-turtle_tager.pencolor("red")
-turtle_tager.pensize(5)
-turtle_tager.setpos(400, 50)
 
 
 def move(speed):
@@ -45,8 +41,17 @@ def move(speed):
         player.forward(20)
 
 
+print("Press s or n to continue:")
+
 while i == True:
-    move(4)
+    # with keyboard.Events() as events:
+    #     print("hi")
+    #     # Block for as much as possible
+    #     event = events.get(1e6)
+    # print(event.key)
+    # if event.key == keyboard.KeyCode.from_char("s"):
+    #     print("YES")
+    move(1)
 
 
 tt.exitonclick()
