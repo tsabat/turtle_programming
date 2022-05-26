@@ -126,8 +126,7 @@ tager.pendown
 
 
 while i == True:
+    print("player move")
     move(1)
+    print("tager move")
     tager_move(1)
-
-
-tt.exitonclick()
