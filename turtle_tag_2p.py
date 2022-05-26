@@ -112,14 +112,14 @@ def tager_move(speed):
         tager.forward(25)
 
 
-tager.penup
+tager.pendown
 tager.forward(100)
 tager_pos1 += 100
 tager.right(90)
 tager.forward(100)
 tager_pos2 -= 100
 tager.left(90)
-tager.pendown
+tager.penup
 
 
 # print(tager_pos1, tager_pos2)
