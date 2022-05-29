@@ -5,8 +5,8 @@ import turtle
 
 from random import randrange
 
-SCREEN_X = 100
-SCREEN_Y = 100
+SCREEN_X = 500
+SCREEN_Y = 500
 
 screen = Screen()
 screen.setup(
@@ -66,7 +66,8 @@ def turn_right():
 def make_rocks(count):
     coordintates = []
     counter = 0
-    grid_size = 10
+    grid_size = SCREEN_X
+
     while counter < count:
         p1 = randrange(-grid_size, grid_size)
         p2 = randrange(-grid_size, grid_size)
@@ -91,8 +92,8 @@ def is_in_box(bottom_left, top_right, point):
         return False
 
 
-coordinates = make_rocks(1)
-coordinates = [(3, 0)]
+coordinates = make_rocks(5)
+# coordinates = [(3, 0)]
 screen.onkeypress(turn_left, "Left")
 screen.onkeypress(turn_right, "Right")
 
