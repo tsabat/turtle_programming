@@ -36,31 +36,14 @@ player = Turtle("turtle")
 player.pencolor("blue")
 player.pensize(5)
 
-coordinates = make_rock_new(16)
+coordinates = make_rock_new(1)
+# coordinates = make_rock_new(16)
 print(coordinates)
-# make_rocks(1)
-# make_rocks(2)
-# make_rocks(3)
-# make_rocks(4)
 
 
 def move(speed):
     player.speed(speed)
     player_move = input("")
-    # if player_move == ("w"):
-    #     player.forward(20)
-    # else:
-    #     if player_move == ("d"):
-    #         player.right(90)
-    #         player.forward(20)
-    #     else:
-    #         if player_move == ("s"):
-    #             player.right(180)
-    #             player.forward(20)
-    #            else:
-    #                if player_move == ("a"):
-    #                    player.left(90)
-    #                    player.forward(20)
 
     if player_move == "w":
         player.forward(20)
@@ -84,20 +67,6 @@ def move(speed):
 def tager_move(speed):
     tager.speed(speed)
     tager_input = input("")
-    # if player_move == ("w"):
-    #     player.forward(20)
-    # else:
-    #     if player_move == ("d"):
-    #         player.right(90)
-    #         player.forward(20)
-    #     else:
-    #         if player_move == ("s"):
-    #             player.right(180)
-    #             player.forward(20)
-    #            else:
-    #                if player_move == ("a"):
-    #                    player.left(90)
-    #                    player.forward(20)
 
     if tager_input == "w":
         tager.forward(25)
@@ -110,6 +79,18 @@ def tager_move(speed):
     elif tager_input == "a":
         tager.left(90)
         tager.forward(25)
+
+
+def is_in_box(bottom_left, top_right, point):
+    if (
+        point[0] > bottom_left[0]
+        and point[0] < top_right[0]
+        and point[1] > bottom_left[1]
+        and point[1] < top_right[1]
+    ):
+        return True
+    else:
+        return False
 
 
 tager.penup
@@ -126,8 +107,10 @@ tager.pendown
 
 
 while i == True:
+    print("hi")
     move(1)
-    tager_move(1)
+    # print("hi2")
+    # tager_move(1)
 
 
 tt.exitonclick()
