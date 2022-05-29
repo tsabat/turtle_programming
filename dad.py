@@ -36,13 +36,24 @@ class Player(Turtle):
 
     def is_hit(self, rocks):
         for rock in rocks:
-            if is_in_box(
+            if self._is_in_box(
                 (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE),
                 (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE),
                 rock,
             ):
                 print(self.pos())
                 print("Eaten")
+
+    def _is_in_box(self, bottom_left, top_right, point):
+        if (
+            point[0] > bottom_left[0]
+            and point[0] < top_right[0]
+            and point[1] > bottom_left[1]
+            and point[1] < top_right[1]
+        ):
+            return True
+        else:
+            return False
 
 
 player1 = Player()
@@ -78,18 +89,6 @@ def make_rocks(count):
         counter += 1
 
     return coordintates
-
-
-def is_in_box(bottom_left, top_right, point):
-    if (
-        point[0] > bottom_left[0]
-        and point[0] < top_right[0]
-        and point[1] > bottom_left[1]
-        and point[1] < top_right[1]
-    ):
-        return True
-    else:
-        return False
 
 
 coordinates = make_rocks(5)
