@@ -36,6 +36,12 @@ class Player(Turtle):
     def _x(self):
         return self.position()[0]
 
+    def _box_neg(self):
+        return (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE)
+
+    def _box_pos(self):
+        return (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE)
+
     @property
     def _y(self):
         return self.position()[1]
@@ -49,12 +55,16 @@ class Player(Turtle):
     def pos(self):
         return (round(self._x), round(self._y))
 
+    def opponent_check(self):
+        if self._is_in_box(self._box_neg(), self._box_pos(), self.opponent):
+            print("tagged")
+
     def rock_check(self):
         rock: Turtle
         for count, rock in enumerate(self.rocks):
             if self._is_in_box(
-                (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE),
-                (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE),
+                self._box_neg(),
+                self._box_pos(),
                 rock,
             ):
                 rock.hideturtle()
@@ -95,11 +105,11 @@ class Player(Turtle):
 
 
 player1 = Player("turtle")
-player1.setup(color="green")
-print(player1.color)
-
+player1.setup(color="red")
 player2 = Player("turtle")
-player2.setup(color="red")
+player2.setup(color="green")
+player1.set_opponent(player2)
+player2.set_opponent(player1)
 
 
 screen.onkeypress(player1.turn_left, "Left")
@@ -115,3 +125,5 @@ while True:
 
     player1.rock_check()
     player2.rock_check()
+    player2.opponent_check()
+    player1.opponent_check()
