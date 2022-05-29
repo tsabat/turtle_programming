@@ -50,12 +50,14 @@ class Player(Turtle):
         return (round(self._x), round(self._y))
 
     def rock_check(self):
+        rock: Turtle
         for count, rock in enumerate(self.rocks):
             if self._is_in_box(
                 (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE),
                 (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE),
                 rock,
             ):
+                rock.hideturtle()
                 self.rocks.remove(rock)
                 if len(self.rocks) == 0:
                     print("no more rocks!")
@@ -63,7 +65,8 @@ class Player(Turtle):
                 print(self.pos())
                 print("Eaten")
 
-    def _is_in_box(self, bottom_left, top_right, point):
+    def _is_in_box(self, bottom_left, top_right, point: Turtle):
+        point = point.pos()
         if (
             point[0] > bottom_left[0]
             and point[0] < top_right[0]
@@ -85,7 +88,7 @@ class Player(Turtle):
             rock = Turtle("square")
             rock.color(self.color_name)
             rock.setpos(p1, p2)
-            self.rocks.append((p1, p2))
+            self.rocks.append(rock)
             counter += 1
 
         return self.rocks
