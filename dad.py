@@ -31,6 +31,12 @@ class Player(Turtle):
     def _y(self):
         return self.position()[1]
 
+    def turn_left(self):
+        self.left(10)
+
+    def turn_right(self):
+        self.right(10)
+
     def pos(self):
         return (round(self._x), round(self._y))
 
@@ -64,16 +70,6 @@ player1.color("turquoise")
 player1.penup()
 
 
-def turn_left():
-    player1.color("light green")
-    player1.left(10)
-
-
-def turn_right():
-    player1.color("light green")
-    player1.right(10)
-
-
 def make_rocks(count):
     coordintates = []
     counter = 0
@@ -93,8 +89,8 @@ def make_rocks(count):
 
 coordinates = make_rocks(5)
 # coordinates = [(3, 0)]
-screen.onkeypress(turn_left, "Left")
-screen.onkeypress(turn_right, "Right")
+screen.onkeypress(player1.turn_left, "Left")
+screen.onkeypress(player1.turn_right, "Right")
 
 
 screen.listen()
