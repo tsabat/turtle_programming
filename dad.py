@@ -21,11 +21,16 @@ screen.bgcolor("dark salmon")
 
 
 class Player(Turtle):
-    def setup(self, color="green", speed=2):
-        self.color = color
-        self.speed = speed
+    def setup(self, color="green", speed=5, rocks=5):
+        self.color_name = color
+        self.color(self.color_name)
+        self.speed(speed)
+        self.make_rocks(rocks)
 
     BOX_SIZE = 5
+
+    def set_opponent(self, opponent: Turtle):
+        self.opponent = opponent
 
     @property
     def _x(self):
@@ -44,13 +49,17 @@ class Player(Turtle):
     def pos(self):
         return (round(self._x), round(self._y))
 
-    def hit_check(self, rocks):
-        for rock in rocks:
+    def rock_check(self):
+        for count, rock in enumerate(self.rocks):
             if self._is_in_box(
                 (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE),
                 (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE),
                 rock,
             ):
+                self.rocks.remove(rock)
+                if len(self.rocks) == 0:
+                    print("no more rocks!")
+                print(count)
                 print(self.pos())
                 print("Eaten")
 
@@ -65,32 +74,31 @@ class Player(Turtle):
         else:
             return False
 
+    def make_rocks(self, count):
+        self.rocks = []
+        counter = 0
+        grid_size = SCREEN_X
 
-def make_rocks(count):
-    coordintates = []
-    counter = 0
-    grid_size = SCREEN_X
+        while counter < count:
+            p1 = randrange(-grid_size, grid_size)
+            p2 = randrange(-grid_size, grid_size)
+            rock = Turtle("square")
+            rock.color(self.color_name)
+            rock.setpos(p1, p2)
+            self.rocks.append((p1, p2))
+            counter += 1
 
-    while counter < count:
-        p1 = randrange(-grid_size, grid_size)
-        p2 = randrange(-grid_size, grid_size)
-        rock = Turtle("square")
-        rock.color("gray")
-        rock.setpos(p1, p2)
-        coordintates.append((p1, p2))
-        counter += 1
-
-    return coordintates
-
-
-player1 = Player()
-player1.setup()
-
-player2 = Player()
-player2.setup()
+        return self.rocks
 
 
-coordinates = make_rocks(5)
+player1 = Player("turtle")
+player1.setup(color="green")
+print(player1.color)
+
+player2 = Player("turtle")
+player2.setup(color="red")
+
+
 screen.onkeypress(player1.turn_left, "Left")
 screen.onkeypress(player1.turn_right, "Right")
 screen.onkeypress(player2.turn_left, "a")
@@ -102,5 +110,5 @@ while True:
     player1.forward(1)
     player2.forward(1)
 
-    player1.hit_check(coordinates)
-    player2.hit_check(coordinates)
+    player1.rock_check()
+    player2.rock_check()
