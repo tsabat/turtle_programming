@@ -21,6 +21,9 @@ screen.bgcolor("dark salmon")
 
 
 class Player(Turtle):
+    def __init__(self, shape: str = "turtle", visible: bool = True) -> None:
+        super().__init__(shape, visible)
+
     BOX_SIZE = 5
 
     @property
