@@ -26,6 +26,7 @@ class Player(Turtle):
         self.color(self.color_name)
         self.speed(speed)
         self.make_rocks(rocks)
+        self.motion_state = self.forward
 
     BOX_SIZE = 5
 
@@ -57,7 +58,9 @@ class Player(Turtle):
 
     def opponent_check(self):
         if self._is_in_box(self._box_neg(), self._box_pos(), self.opponent):
-            print("tagged")
+            self.opponent.setpos(
+                randrange(-SCREEN_X, SCREEN_X), randrange(-SCREEN_X, SCREEN_X)
+            )
 
     def rock_check(self):
         rock: Turtle
@@ -71,6 +74,7 @@ class Player(Turtle):
                 self.rocks.remove(rock)
                 if len(self.rocks) == 0:
                     print("no more rocks!")
+                    exit()
                 print(count)
                 print(self.pos())
                 print("Eaten")
@@ -120,8 +124,8 @@ screen.onkeypress(player2.turn_right, "d")
 screen.listen()
 
 while True:
-    player1.forward(1)
-    player2.forward(1)
+    player1.motion_state(1)
+    player2.motion_state(1)
 
     player1.rock_check()
     player2.rock_check()
