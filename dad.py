@@ -21,8 +21,9 @@ screen.bgcolor("dark salmon")
 
 
 class Player(Turtle):
-    def __init__(self, shape: str = "turtle", visible: bool = True) -> None:
-        super().__init__(shape, visible)
+    def setup(self, color="green", speed=2):
+        self.color = color
+        self.speed = speed
 
     BOX_SIZE = 5
 
@@ -43,7 +44,7 @@ class Player(Turtle):
     def pos(self):
         return (round(self._x), round(self._y))
 
-    def is_hit(self, rocks):
+    def hit_check(self, rocks):
         for rock in rocks:
             if self._is_in_box(
                 (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE),
@@ -65,14 +66,6 @@ class Player(Turtle):
             return False
 
 
-player1 = Player()
-player1.speed = 1
-
-player1.shape("turtle")
-player1.color("turquoise")
-player1.penup()
-
-
 def make_rocks(count):
     coordintates = []
     counter = 0
@@ -81,7 +74,7 @@ def make_rocks(count):
     while counter < count:
         p1 = randrange(-grid_size, grid_size)
         p2 = randrange(-grid_size, grid_size)
-        rock = Player("square")
+        rock = Turtle("square")
         rock.color("gray")
         rock.setpos(p1, p2)
         coordintates.append((p1, p2))
@@ -90,21 +83,24 @@ def make_rocks(count):
     return coordintates
 
 
+player1 = Player()
+player1.setup()
+
+player2 = Player()
+player2.setup()
+
+
 coordinates = make_rocks(5)
-# coordinates = [(3, 0)]
 screen.onkeypress(player1.turn_left, "Left")
 screen.onkeypress(player1.turn_right, "Right")
-
+screen.onkeypress(player2.turn_left, "a")
+screen.onkeypress(player2.turn_right, "d")
 
 screen.listen()
 
 while True:
     player1.forward(1)
+    player2.forward(1)
 
-    # print(f"pos: {player.pos()}")
-    # print(f"coordinates: {coordinates}")
-
-    player1.is_hit(coordinates)
-
-    # if player.pos() in coordinates:
-    #     print("eaten!")
+    player1.hit_check(coordinates)
+    player2.hit_check(coordinates)
