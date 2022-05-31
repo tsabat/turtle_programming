@@ -21,7 +21,8 @@ screen.bgcolor("dark salmon")
 
 
 class Player(Turtle):
-    def setup(self, color="green", speed=5, rocks=5):
+    # this is the setup frunction.  It sets (and allows you to override) some basics
+    def setup(self, color="green", speed=0, rocks=5):
         self.color_name = color
         self.color(self.color_name)
         self.speed(speed)
@@ -30,38 +31,48 @@ class Player(Turtle):
 
     BOX_SIZE = 5
 
+    # use this to store your oppoent on the player
     def set_opponent(self, opponent: Turtle):
         self.opponent = opponent
 
-    @property
-    def _x(self):
-        return self.position()[0]
-
-    def _box_neg(self):
-        return (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE)
-
-    def _box_pos(self):
-        return (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE)
-
+    # access to the y position
     @property
     def _y(self):
         return self.position()[1]
 
+    # access to the x position
+    @property
+    def _x(self):
+        return self.position()[0]
+
+    # bounding box helper (positive location)
+    def _box_neg(self):
+        return (self._x - self.BOX_SIZE, self._y - self.BOX_SIZE)
+
+    # bounding box helper (negative location)
+    def _box_pos(self):
+        return (self._x + self.BOX_SIZE, self._y + self.BOX_SIZE)
+
+    # turning helpers
     def turn_left(self):
         self.left(10)
 
+    # turning helpers
     def turn_right(self):
         self.right(10)
 
+    # overrides position, removes the floating point numbers
     def pos(self):
         return (round(self._x), round(self._y))
 
+    # is your opponent near you?
     def opponent_check(self):
         if self._is_in_box(self._box_neg(), self._box_pos(), self.opponent):
             self.opponent.setpos(
                 randrange(-SCREEN_X, SCREEN_X), randrange(-SCREEN_X, SCREEN_X)
             )
 
+    # is a rock near you?
     def rock_check(self):
         rock: Turtle
         for count, rock in enumerate(self.rocks):
@@ -79,6 +90,7 @@ class Player(Turtle):
                 print(self.pos())
                 print("Eaten")
 
+    # helper for finding a bounding box for a point
     def _is_in_box(self, bottom_left, top_right, point: Turtle):
         point = point.pos()
         if (
@@ -91,6 +103,7 @@ class Player(Turtle):
         else:
             return False
 
+    # creates rocks.  Gets random grid positions within the screen size, then sets rocks there.
     def make_rocks(self, count):
         self.rocks = []
         counter = 0
@@ -108,6 +121,7 @@ class Player(Turtle):
         return self.rocks
 
 
+# initiate the objects
 player1 = Player("turtle")
 player1.setup(color="red")
 player2 = Player("turtle")
@@ -115,14 +129,14 @@ player2.setup(color="green")
 player1.set_opponent(player2)
 player2.set_opponent(player1)
 
-
+# listen for keypresses
 screen.onkeypress(player1.turn_left, "Left")
 screen.onkeypress(player1.turn_right, "Right")
 screen.onkeypress(player2.turn_left, "a")
 screen.onkeypress(player2.turn_right, "d")
-
 screen.listen()
 
+# forever loop to check for rocks and positions
 while True:
     player1.motion_state(1)
     player2.motion_state(1)
